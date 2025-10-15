@@ -136,20 +136,18 @@ INSERT INTO "categories" ("id", "name", "description", "slug", "createdAt", "upd
 -- Wstawienie 4 produktów - wielkopowierzchniowe płyty dekoracyjne
 INSERT INTO "products" ("id", "name", "description", "price", "categoryId", "isActive", "dimensions", "material", "features", "createdAt", "updatedAt") VALUES
 ('prod_001', 'Płyta Marmurowa Calacatta Gold', 'Luksusowa płyta marmurowa z eleganckim złotym żyłkowaniem, idealna do salonów i jadalni', 1299.99, 'cat_001', 1, '300cm x 150cm x 2cm', 'Marmur Calacatta', '{"grubosc": "2cm", "wysokosc": "300cm", "szerokosc": "150cm", "kolor": "biały ze złotym", "wzór": "żyłkowanie", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-('prod_002', 'Płyta Dekoracyjna Nero Marquina Gold', 'Nowoczesna płyta z czarnego marmuru z metalicznymi złotymi akcentami', 1599.99, 'cat_002', 1, '280cm x 140cm x 2cm', 'Marmur Nero Marquina + Złoto', '{"grubosc": "2cm", "wysokosc": "280cm", "szerokosc": "140cm", "kolor": "czarny ze złotym", "efekt": "metaliczny", "aplikacja": "ściana multimedialna"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-('prod_003', 'Płyta Onyks z Kolorowym Żyłkowaniem', 'Wielkoformatowa płyta onyksowa z organicznymi wzorami w odcieniach turkusu i złota', 1899.99, 'cat_003', 1, '320cm x 160cm x 1.5cm', 'Onyks naturalny', '{"grubosc": "1.5cm", "wysokosc": "320cm", "szerokosc": "160cm", "kolor": "biały/turkus/złoty", "wzór": "organiczny", "przeznaczenie": "prysznic"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-('prod_004', 'Płyta Marmurowa Carrara z Metalicznym Akcentem', 'Elegancka płyta marmurowa z subtelnym metalicznym żyłkowaniem', 1199.99, 'cat_004', 1, '290cm x 145cm x 2cm', 'Marmur Carrara + Metal', '{"grubosc": "2cm", "wysokosc": "290cm", "szerokosc": "145cm", "kolor": "biały/szary", "akcent": "metaliczny", "powierzchnia": "matowa"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
+('prod_002', 'Płyta Marmurowa Nero Marquina Gold', 'Nowoczesna płyta z czarnego marmuru z metalicznymi złotymi akcentami', 1599.99, 'cat_001', 1, '280cm x 140cm x 2cm', 'Marmur Nero Marquina + Złoto', '{"grubosc": "2cm", "wysokosc": "280cm", "szerokosc": "140cm", "kolor": "czarny ze złotym", "efekt": "metaliczny", "aplikacja": "ściana multimedialna"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
+('prod_003', 'Płyta Granitowa Black Galaxy', 'Elegancka płyta granitowa z drobnymi złotymi wtrąceniami, idealna do kuchni', 1399.99, 'cat_002', 1, '320cm x 160cm x 3cm', 'Granit Black Galaxy', '{"grubosc": "3cm", "wysokosc": "320cm", "szerokosc": "160cm", "kolor": "czarny ze złotym", "wzór": "drobne wtrącenia", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
+('prod_004', 'Płyta Granitowa Verde Ubatuba', 'Trwała płyta granitowa w odcieniach zieleni z metalicznymi akcentami', 1199.99, 'cat_002', 1, '290cm x 145cm x 3cm', 'Granit Verde Ubatuba', '{"grubosc": "3cm", "wysokosc": "290cm", "szerokosc": "145cm", "kolor": "zielony/szary", "akcent": "metaliczny", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- Wstawienie obrazów dla produktów - wielkopowierzchniowe płyty dekoracyjne
 INSERT INTO "images" ("id", "url", "productId") VALUES
-('img_001', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-calacatta-gold-1.jpg', 'prod_001'),
-('img_002', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-calacatta-gold-2.jpg', 'prod_001'),
-('img_003', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-nero-marquina-gold-1.jpg', 'prod_002'),
-('img_004', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-nero-marquina-gold-2.jpg', 'prod_002'),
-('img_005', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-onyks-kolorowa-1.jpg', 'prod_003'),
-('img_006', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-onyks-kolorowa-2.jpg', 'prod_003'),
-('img_007', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-carrara-metaliczna-1.jpg', 'prod_004'),
-('img_008', 'https://res.cloudinary.com/your-cloud/image/upload/v1/products/plyta-carrara-metaliczna-2.jpg', 'prod_004');
+('img_002', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical4_va1lug.jpg', 'prod_001'),
+('img_003', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical1_v2bmxc.jpg', 'prod_002'),
+('img_004', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-square_ck459b.jpg', 'prod_002'),
+('img_006', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525488/photo-horizontal1_c5jg3k.jpg', 'prod_003'),
+('img_007', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760548382/products/bw5arbhi5mvdwcxs5gkp.jpg', 'prod_004'),
+('img_008', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical2_xci4a6.jpg', 'prod_004');
 
 -- =============================================
 -- KOMENTARZE
@@ -161,7 +159,9 @@ INSERT INTO "images" ("id", "url", "productId") VALUES
 -- Obrazy używają przykładowych URL-i Cloudinary (do podmiany na rzeczywiste)
 -- JSON w kolumnie features jest przechowywany jako TEXT w SQLite
 -- Produkty dopasowane do wielkopowierzchniowych płyt dekoracyjnych:
+-- KATEGORIA MARMUR:
 -- 1. Płyta Calacatta Gold - biały marmur ze złotym żyłkowaniem (salon)
 -- 2. Płyta Nero Marquina Gold - czarny marmur ze złotymi akcentami (ściana multimedialna)
--- 3. Płyta Onyks kolorowa - organiczne wzory w turkusie i złocie (prysznic)
--- 4. Płyta Carrara metaliczna - subtelne metaliczne żyłkowanie (kuchnia)
+-- KATEGORIA GRANIT:
+-- 3. Płyta Black Galaxy - czarny granit ze złotymi wtrąceniami (kuchnia)
+-- 4. Płyta Verde Ubatuba - zielony granit z metalicznymi akcentami (prysznic)
