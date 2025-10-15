@@ -46,10 +46,8 @@ async function main() {
 
   // Tworzenie kategorii
   const categories = [
-    { name: 'Marmur', slug: 'marmur', description: 'Eleganckie płyty marmurowe' },
-    { name: 'Granit', slug: 'granit', description: 'Trwałe płyty granitowe' },
-    { name: 'Ceramika', slug: 'ceramika', description: 'Nowoczesne płyty ceramiczne' },
-    { name: 'Kwarc', slug: 'kwarc', description: 'Luksusowe płyty kwarcowe' },
+    { name: 'Marmur', slug: 'marmur', description: 'Luksusowe wielkopowierzchniowe płyty marmurowe do dekoracji wnętrz' },
+    { name: 'Granit', slug: 'granit', description: 'Trwałe i eleganckie płyty granitowe do zastosowań dekoracyjnych' },
   ];
 
   for (const categoryData of categories) {
@@ -69,73 +67,89 @@ async function main() {
     categoryMap.set(cat.name, cat.id);
   });
 
-  // Tworzenie produktów
+  // Tworzenie produktów - wielkopowierzchniowe płyty dekoracyjne
   const products = [
     {
-      name: 'Płyta Marmurowa Bianco',
-      description: 'Elegancka płyta w kolorze białym z subtelnymi żyłkami. Idealna do nowoczesnych aranżacji kuchennych i łazienkowych.',
-      price: 450,
+      name: 'Płyta Marmurowa Calacatta Gold',
+      description: 'Luksusowa płyta marmurowa z eleganckim złotym żyłkowaniem, idealna do salonów i jadalni',
+      price: 1299.99,
       category: 'Marmur',
-      dimensions: '120x60 cm',
-      material: 'Marmur',
-      features: ['Wodoodporna', 'Ognioodporna', 'Łatwa w obróbce', 'Docinamy pod wymiar'],
-      images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'],
+      dimensions: '300cm x 150cm x 2cm',
+      material: 'Marmur Calacatta',
+      features: {
+        grubosc: '2cm',
+        wysokosc: '300cm',
+        szerokosc: '150cm',
+        kolor: 'biały ze złotym',
+        wzor: 'żyłkowanie',
+        powierzchnia: 'polerowana'
+      },
+      images: [
+        'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical4_va1lug.jpg'
+      ],
       isActive: true,
     },
     {
-      name: 'Płyta Granitowa Nero',
-      description: 'Czarna płyta granitowa o wyjątkowej trwałości. Doskonała do eleganckich wnętrz.',
-      price: 520,
-      category: 'Granit',
-      dimensions: '120x60 cm',
-      material: 'Granit',
-      features: ['Wodoodporna', 'Ognioodporna', 'Łatwa w obróbce', 'Docinamy pod wymiar'],
-      images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'],
-      isActive: true,
-    },
-    {
-      name: 'Płyta Ceramiczna Modern',
-      description: 'Nowoczesna płyta ceramiczna w stylu minimalistycznym. Idealna do współczesnych aranżacji.',
-      price: 380,
-      category: 'Ceramika',
-      dimensions: '120x60 cm',
-      material: 'Ceramika',
-      features: ['Wodoodporna', 'Ognioodporna', 'Łatwa w obróbce', 'Docinamy pod wymiar'],
-      images: ['https://images.unsplash.com/photo-1581578731548-c6a0c3f2f4c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'],
-      isActive: true,
-    },
-    {
-      name: 'Płyta Kwarcowa Lux',
-      description: 'Luksusowa płyta kwarcowa o wyjątkowym połysku. Najwyższa jakość dla wymagających klientów.',
-      price: 680,
-      category: 'Kwarc',
-      dimensions: '120x60 cm',
-      material: 'Kwarc',
-      features: ['Wodoodporna', 'Ognioodporna', 'Łatwa w obróbce', 'Docinamy pod wymiar'],
-      images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'],
-      isActive: true,
-    },
-    {
-      name: 'Płyta Marmurowa Carrara',
-      description: 'Klasyczna płyta marmurowa Carrara z charakterystycznymi żyłkami. Timeless design.',
-      price: 580,
+      name: 'Płyta Marmurowa Nero Marquina Gold',
+      description: 'Nowoczesna płyta z czarnego marmuru z metalicznymi złotymi akcentami',
+      price: 1599.99,
       category: 'Marmur',
-      dimensions: '120x60 cm',
-      material: 'Marmur',
-      features: ['Wodoodporna', 'Ognioodporna', 'Łatwa w obróbce', 'Docinamy pod wymiar'],
-      images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'],
+      dimensions: '280cm x 140cm x 2cm',
+      material: 'Marmur Nero Marquina + Złoto',
+      features: {
+        grubosc: '2cm',
+        wysokosc: '280cm',
+        szerokosc: '140cm',
+        kolor: 'czarny ze złotym',
+        efekt: 'metaliczny',
+        aplikacja: 'ściana multimedialna'
+      },
+      images: [
+        'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical1_v2bmxc.jpg',
+        'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-square_ck459b.jpg'
+      ],
       isActive: true,
     },
     {
-      name: 'Płyta Granitowa Verde',
-      description: 'Zielona płyta granitowa o naturalnym wyglądzie. Idealna do rustykalnych aranżacji.',
-      price: 490,
+      name: 'Płyta Granitowa Black Galaxy',
+      description: 'Elegancka płyta granitowa z drobnymi złotymi wtrąceniami, idealna do kuchni',
+      price: 1399.99,
       category: 'Granit',
-      dimensions: '120x60 cm',
-      material: 'Granit',
-      features: ['Wodoodporna', 'Ognioodporna', 'Łatwa w obróbce', 'Docinamy pod wymiar'],
-      images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'],
-      isActive: false,
+      dimensions: '320cm x 160cm x 3cm',
+      material: 'Granit Black Galaxy',
+      features: {
+        grubosc: '3cm',
+        wysokosc: '320cm',
+        szerokosc: '160cm',
+        kolor: 'czarny ze złotym',
+        wzor: 'drobne wtrącenia',
+        powierzchnia: 'polerowana'
+      },
+      images: [
+        'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525488/photo-horizontal1_c5jg3k.jpg'
+      ],
+      isActive: true,
+    },
+    {
+      name: 'Płyta Granitowa Verde Ubatuba',
+      description: 'Trwała płyta granitowa w odcieniach zieleni z metalicznymi akcentami',
+      price: 1199.99,
+      category: 'Granit',
+      dimensions: '290cm x 145cm x 3cm',
+      material: 'Granit Verde Ubatuba',
+      features: {
+        grubosc: '3cm',
+        wysokosc: '290cm',
+        szerokosc: '145cm',
+        kolor: 'zielony/szary',
+        akcent: 'metaliczny',
+        powierzchnia: 'polerowana'
+      },
+      images: [
+        'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760548382/products/bw5arbhi5mvdwcxs5gkp.jpg',
+        'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical2_xci4a6.jpg'
+      ],
+      isActive: true,
     },
   ];
 
@@ -161,9 +175,9 @@ async function main() {
   console.log('✅ Produkty utworzone');
 
   // Tworzenie zamówień
-  const product1 = await prisma.product.findFirst({ where: { name: 'Płyta Marmurowa Bianco' } });
-  const product2 = await prisma.product.findFirst({ where: { name: 'Płyta Granitowa Nero' } });
-  const product3 = await prisma.product.findFirst({ where: { name: 'Płyta Ceramiczna Modern' } });
+  const product1 = await prisma.product.findFirst({ where: { name: 'Płyta Marmurowa Calacatta Gold' } });
+  const product2 = await prisma.product.findFirst({ where: { name: 'Płyta Marmurowa Nero Marquina Gold' } });
+  const product3 = await prisma.product.findFirst({ where: { name: 'Płyta Granitowa Black Galaxy' } });
 
   if (product1 && product2 && product3) {
     // Zamówienie 1
@@ -171,7 +185,7 @@ async function main() {
       data: {
         userId: user1.id,
         status: 'CONFIRMED',
-        totalAmount: 1100,
+        totalAmount: 2899.98,
         shippingAddress: 'ul. Przykładowa 123, 00-000 Warszawa',
         notes: 'Proszę o kontakt telefoniczny przed dostawą',
       },
@@ -199,7 +213,7 @@ async function main() {
       data: {
         userId: user2.id,
         status: 'DELIVERED',
-        totalAmount: 520,
+        totalAmount: 1599.99,
         shippingAddress: 'ul. Testowa 456, 30-000 Kraków',
         notes: '',
       },
@@ -219,7 +233,7 @@ async function main() {
       data: {
         userId: user1.id,
         status: 'PENDING',
-        totalAmount: 380,
+        totalAmount: 1399.99,
         shippingAddress: 'ul. Główna 789, 80-000 Gdańsk',
         notes: 'Klient prosi o szybką realizację',
       },

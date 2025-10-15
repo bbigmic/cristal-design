@@ -12,10 +12,10 @@ CREATE TABLE "users" (
     "name" TEXT,
     "password" TEXT,
     "role" TEXT NOT NULL DEFAULT 'USER',
-    "emailVerified" DATETIME,
+    "emailVerified" TIMESTAMP,
     "image" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP NOT NULL
 );
 
 -- Tabela kont (dla NextAuth)
@@ -40,7 +40,7 @@ CREATE TABLE "sessions" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "sessionToken" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "expires" DATETIME NOT NULL,
+    "expires" TIMESTAMP NOT NULL,
     CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE "sessions" (
 CREATE TABLE "verification_tokens" (
     "identifier" TEXT NOT NULL,
     "token" TEXT NOT NULL,
-    "expires" DATETIME NOT NULL
+    "expires" TIMESTAMP NOT NULL
 );
 
 -- Tabela kategorii
@@ -57,8 +57,8 @@ CREATE TABLE "categories" (
     "name" TEXT NOT NULL,
     "description" TEXT,
     "slug" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP NOT NULL
 );
 
 -- Tabela produktów
@@ -66,14 +66,14 @@ CREATE TABLE "products" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "description" TEXT,
-    "price" REAL NOT NULL,
+    "price" DECIMAL(10,2) NOT NULL,
     "categoryId" TEXT NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "dimensions" TEXT,
     "material" TEXT,
-    "features" TEXT, -- JSON jako TEXT w SQLite
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "features" JSONB, -- JSON w PostgreSQL
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP NOT NULL,
     CONSTRAINT "products_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -90,11 +90,11 @@ CREATE TABLE "orders" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userId" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'PENDING',
-    "totalAmount" REAL NOT NULL,
+    "totalAmount" DECIMAL(10,2) NOT NULL,
     "shippingAddress" TEXT NOT NULL,
     "notes" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP NOT NULL,
     CONSTRAINT "orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE "order_items" (
     "orderId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "price" REAL NOT NULL,
+    "price" DECIMAL(10,2) NOT NULL,
     CONSTRAINT "order_items_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "order_items_productId_fkey" FOREIGN KEY ("productId") REFERENCES "products" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -135,10 +135,10 @@ INSERT INTO "categories" ("id", "name", "description", "slug", "createdAt", "upd
 
 -- Wstawienie 4 produktów - wielkopowierzchniowe płyty dekoracyjne
 INSERT INTO "products" ("id", "name", "description", "price", "categoryId", "isActive", "dimensions", "material", "features", "createdAt", "updatedAt") VALUES
-('prod_001', 'Płyta Marmurowa Calacatta Gold', 'Luksusowa płyta marmurowa z eleganckim złotym żyłkowaniem, idealna do salonów i jadalni', 1299.99, 'cat_001', 1, '300cm x 150cm x 2cm', 'Marmur Calacatta', '{"grubosc": "2cm", "wysokosc": "300cm", "szerokosc": "150cm", "kolor": "biały ze złotym", "wzór": "żyłkowanie", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-('prod_002', 'Płyta Marmurowa Nero Marquina Gold', 'Nowoczesna płyta z czarnego marmuru z metalicznymi złotymi akcentami', 1599.99, 'cat_001', 1, '280cm x 140cm x 2cm', 'Marmur Nero Marquina + Złoto', '{"grubosc": "2cm", "wysokosc": "280cm", "szerokosc": "140cm", "kolor": "czarny ze złotym", "efekt": "metaliczny", "aplikacja": "ściana multimedialna"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-('prod_003', 'Płyta Granitowa Black Galaxy', 'Elegancka płyta granitowa z drobnymi złotymi wtrąceniami, idealna do kuchni', 1399.99, 'cat_002', 1, '320cm x 160cm x 3cm', 'Granit Black Galaxy', '{"grubosc": "3cm", "wysokosc": "320cm", "szerokosc": "160cm", "kolor": "czarny ze złotym", "wzór": "drobne wtrącenia", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-('prod_004', 'Płyta Granitowa Verde Ubatuba', 'Trwała płyta granitowa w odcieniach zieleni z metalicznymi akcentami', 1199.99, 'cat_002', 1, '290cm x 145cm x 3cm', 'Granit Verde Ubatuba', '{"grubosc": "3cm", "wysokosc": "290cm", "szerokosc": "145cm", "kolor": "zielony/szary", "akcent": "metaliczny", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
+('prod_001', 'Płyta Marmurowa Calacatta Gold', 'Luksusowa płyta marmurowa z eleganckim złotym żyłkowaniem, idealna do salonów i jadalni', 1299.99, 'cat_001', true, '300cm x 150cm x 2cm', 'Marmur Calacatta', '{"grubosc": "2cm", "wysokosc": "300cm", "szerokosc": "150cm", "kolor": "biały ze złotym", "wzór": "żyłkowanie", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
+('prod_002', 'Płyta Marmurowa Nero Marquina Gold', 'Nowoczesna płyta z czarnego marmuru z metalicznymi złotymi akcentami', 1599.99, 'cat_001', true, '280cm x 140cm x 2cm', 'Marmur Nero Marquina + Złoto', '{"grubosc": "2cm", "wysokosc": "280cm", "szerokosc": "140cm", "kolor": "czarny ze złotym", "efekt": "metaliczny", "aplikacja": "ściana multimedialna"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
+('prod_003', 'Płyta Granitowa Black Galaxy', 'Elegancka płyta granitowa z drobnymi złotymi wtrąceniami, idealna do kuchni', 1399.99, 'cat_002', true, '320cm x 160cm x 3cm', 'Granit Black Galaxy', '{"grubosc": "3cm", "wysokosc": "320cm", "szerokosc": "160cm", "kolor": "czarny ze złotym", "wzór": "drobne wtrącenia", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
+('prod_004', 'Płyta Granitowa Verde Ubatuba', 'Trwała płyta granitowa w odcieniach zieleni z metalicznymi akcentami', 1199.99, 'cat_002', true, '290cm x 145cm x 3cm', 'Granit Verde Ubatuba', '{"grubosc": "3cm", "wysokosc": "290cm", "szerokosc": "145cm", "kolor": "zielony/szary", "akcent": "metaliczny", "powierzchnia": "polerowana"}', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- Wstawienie obrazów dla produktów - wielkopowierzchniowe płyty dekoracyjne
 INSERT INTO "images" ("id", "url", "productId") VALUES
@@ -157,7 +157,7 @@ INSERT INTO "images" ("id", "url", "productId") VALUES
 -- Wszystkie produkty są aktywne (isActive = 1)
 -- Ceny podane w złotych polskich
 -- Obrazy używają przykładowych URL-i Cloudinary (do podmiany na rzeczywiste)
--- JSON w kolumnie features jest przechowywany jako TEXT w SQLite
+-- JSON w kolumnie features jest przechowywany jako JSONB w PostgreSQL
 -- Produkty dopasowane do wielkopowierzchniowych płyt dekoracyjnych:
 -- KATEGORIA MARMUR:
 -- 1. Płyta Calacatta Gold - biały marmur ze złotym żyłkowaniem (salon)
