@@ -76,14 +76,7 @@ async function main() {
       category: 'Marmur',
       dimensions: '300cm x 150cm x 2cm',
       material: 'Marmur Calacatta',
-      features: {
-        grubosc: '2cm',
-        wysokosc: '300cm',
-        szerokosc: '150cm',
-        kolor: 'biały ze złotym',
-        wzor: 'żyłkowanie',
-        powierzchnia: 'polerowana'
-      },
+      features: ['Grubość: 2cm', 'Wysokość: 300cm', 'Szerokość: 150cm', 'Kolor: biały ze złotym', 'Wzór: żyłkowanie', 'Powierzchnia: polerowana'],
       images: [
         'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical4_va1lug.jpg'
       ],
@@ -96,14 +89,7 @@ async function main() {
       category: 'Marmur',
       dimensions: '280cm x 140cm x 2cm',
       material: 'Marmur Nero Marquina + Złoto',
-      features: {
-        grubosc: '2cm',
-        wysokosc: '280cm',
-        szerokosc: '140cm',
-        kolor: 'czarny ze złotym',
-        efekt: 'metaliczny',
-        aplikacja: 'ściana multimedialna'
-      },
+      features: ['Grubość: 2cm', 'Wysokość: 280cm', 'Szerokość: 140cm', 'Kolor: czarny ze złotym', 'Efekt: metaliczny', 'Aplikacja: ściana multimedialna'],
       images: [
         'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical1_v2bmxc.jpg',
         'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-square_ck459b.jpg'
@@ -117,14 +103,7 @@ async function main() {
       category: 'Granit',
       dimensions: '320cm x 160cm x 3cm',
       material: 'Granit Black Galaxy',
-      features: {
-        grubosc: '3cm',
-        wysokosc: '320cm',
-        szerokosc: '160cm',
-        kolor: 'czarny ze złotym',
-        wzor: 'drobne wtrącenia',
-        powierzchnia: 'polerowana'
-      },
+      features: ['Grubość: 3cm', 'Wysokość: 320cm', 'Szerokość: 160cm', 'Kolor: czarny ze złotym', 'Wzór: drobne wtrącenia', 'Powierzchnia: polerowana'],
       images: [
         'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525488/photo-horizontal1_c5jg3k.jpg'
       ],
@@ -137,14 +116,7 @@ async function main() {
       category: 'Granit',
       dimensions: '290cm x 145cm x 3cm',
       material: 'Granit Verde Ubatuba',
-      features: {
-        grubosc: '3cm',
-        wysokosc: '290cm',
-        szerokosc: '145cm',
-        kolor: 'zielony/szary',
-        akcent: 'metaliczny',
-        powierzchnia: 'polerowana'
-      },
+      features: ['Grubość: 3cm', 'Wysokość: 290cm', 'Szerokość: 145cm', 'Kolor: zielony/szary', 'Akcent: metaliczny', 'Powierzchnia: polerowana'],
       images: [
         'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760548382/products/bw5arbhi5mvdwcxs5gkp.jpg',
         'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical2_xci4a6.jpg'

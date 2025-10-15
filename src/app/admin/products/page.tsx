@@ -599,7 +599,7 @@ export default function ProductsPage() {
                     <span className="text-sm text-gray-500">{product.material}</span>
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    {product.features.slice(0, 2).map((feature, index) => (
+                    {Array.isArray(product.features) && product.features.slice(0, 2).map((feature, index) => (
                       <Badge key={index} variant="secondary" className="text-xs">
                         {feature}
                       </Badge>
