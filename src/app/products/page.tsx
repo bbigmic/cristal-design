@@ -152,7 +152,7 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar z filtrami */}
           <div className="lg:w-64 space-y-6">
@@ -293,7 +293,7 @@ export default function ProductsPage() {
             {filteredAndSortedProducts.length > 0 ? (
               <div className={
                 viewMode === "grid" 
-                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  ? "grid grid-cols-1 md:grid-cols-3 gap-8"
                   : "space-y-4"
               }>
                 {filteredAndSortedProducts.map((product) => (
@@ -301,7 +301,7 @@ export default function ProductsPage() {
                     <Link href={`/products/${product.id}`}>
                       <div className="relative">
                         <div className={`relative overflow-hidden rounded-t-lg ${
-                          viewMode === "grid" ? "aspect-square" : "h-48"
+                          viewMode === "grid" ? "aspect-[4/3]" : "h-48"
                         }`}>
                           {product.images.length > 0 ? (
                             <Image
@@ -321,34 +321,34 @@ export default function ProductsPage() {
                             </Badge>
                           </div>
                         </div>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="text-lg line-clamp-2 group-hover:text-blue-600 transition-colors">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-xl line-clamp-2 group-hover:text-blue-600 transition-colors">
                             {product.name}
                           </CardTitle>
-                          <CardDescription className="line-clamp-2">
+                          <CardDescription className="line-clamp-3 text-base">
                             {product.description}
                           </CardDescription>
                         </CardHeader>
                         <CardContent className="pt-0">
                           <div className="space-y-3">
                             <div className="flex items-center justify-between">
-                              <span className="text-2xl font-bold text-gray-900">
+                              <span className="text-3xl font-bold text-gray-900">
                                 {product.price} zł
                               </span>
                               {product.dimensions && (
-                                <span className="text-sm text-gray-500">
+                                <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
                                   {product.dimensions}
                                 </span>
                               )}
                             </div>
                             {product.material && (
-                              <p className="text-sm text-gray-600">
+                              <p className="text-base text-gray-600 font-medium">
                                 Materiał: {product.material}
                               </p>
                             )}
-                            <div className="flex flex-wrap gap-1">
-                              {Array.isArray(product.features) && product.features.slice(0, 3).map((feature, index) => (
-                                <Badge key={index} variant="secondary" className="text-xs">
+                            <div className="flex flex-wrap gap-2">
+                              {Array.isArray(product.features) && product.features.slice(0, 4).map((feature, index) => (
+                                <Badge key={index} variant="secondary" className="text-sm">
                                   {feature}
                                 </Badge>
                               ))}
