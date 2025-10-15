@@ -57,7 +57,7 @@ export default function Navigation() {
                 <span className="text-sm text-gray-700">
                   Cześć, {session.user?.name || session.user?.email}
                 </span>
-                {session.user?.role === "ADMIN" && (
+                {(session.user as { role?: string })?.role === "ADMIN" && (
                   <Button asChild>
                     <Link href="/admin">Panel Admin</Link>
                   </Button>
@@ -137,7 +137,7 @@ export default function Navigation() {
                           {session.user?.name || session.user?.email}
                         </div>
                         <div className="text-xs text-gray-500">
-                          {session.user?.role === "ADMIN" ? "Administrator" : "Użytkownik"}
+                          {(session.user as { role?: string })?.role === "ADMIN" ? "Administrator" : "Użytkownik"}
                         </div>
                       </div>
                     ) : (
@@ -150,7 +150,7 @@ export default function Navigation() {
                   <div className="w-full h-10 bg-gray-200 rounded animate-pulse mb-2"></div>
                 ) : session ? (
                   <>
-                    {session.user?.role === "ADMIN" && (
+                    {(session.user as { role?: string })?.role === "ADMIN" && (
                       <Button asChild className="w-full mb-2">
                         <Link href="/admin">Panel Admin</Link>
                       </Button>

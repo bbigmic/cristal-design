@@ -36,13 +36,13 @@ export default function LoginPage() {
       } else {
         // Sprawdź rolę użytkownika po zalogowaniu
         const session = await getSession();
-        if (session?.user?.role === "ADMIN") {
+        if ((session?.user as { role?: string })?.role === "ADMIN") {
           router.push("/admin");
         } else {
           router.push("/");
         }
       }
-    } catch (error) {
+    } catch {
       setError("Wystąpił błąd podczas logowania");
     } finally {
       setIsLoading(false);

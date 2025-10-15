@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Scissors, Wrench, Truck, Palette, Shield } from "lucide-react";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, Scissors, Wrench, Truck, Shield } from "lucide-react";
 import Image from "next/image";
 
 const features = [

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Shield, Zap, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, Zap } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
@@ -23,7 +23,6 @@ const heroImages = [
 export default function HeroSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const kenBurnsScale = 1.1;
 
   // Auto-advance carousel
   useEffect(() => {
@@ -35,19 +34,6 @@ export default function HeroSection() {
   }, []);
 
 
-  const goToNext = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    setTimeout(() => setIsTransitioning(false), 1000);
-  };
-
-  const goToPrevious = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + heroImages.length) % heroImages.length);
-    setTimeout(() => setIsTransitioning(false), 1000);
-  };
 
   const goToSlide = (index: number) => {
     if (isTransitioning || index === currentImageIndex) return;

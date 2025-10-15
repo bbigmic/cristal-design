@@ -11,11 +11,12 @@ const updateCategorySchema = z.object({
 // GET /api/categories/[id] - Pobierz kategorię po ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const category = await prisma.category.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         products: {
           include: {
@@ -50,15 +51,16 @@ export async function GET(
 // PUT /api/categories/[id] - Zaktualizuj kategorię
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const body = await request.json();
     const validatedData = updateCategorySchema.parse(body);
 
     // Sprawdź czy kategoria istnieje
     const existingCategory = await prisma.category.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!existingCategory) {
@@ -72,7 +74,7 @@ export async function PUT(
     const slugConflict = await prisma.category.findFirst({
       where: {
         slug: validatedData.slug,
-        id: { not: params.id },
+        id: { not: id },
       },
     });
 
@@ -84,7 +86,7 @@ export async function PUT(
     }
 
     const updatedCategory = await prisma.category.update({
-      where: { id: params.id },
+      where: { id },
       data: validatedData,
     });
 
@@ -92,7 +94,7 @@ export async function PUT(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Validation error', details: error.errors },
+        { error: 'Validation error', details: error.issues },
         { status: 400 }
       );
     }
@@ -108,12 +110,13 @@ export async function PUT(
 // DELETE /api/categories/[id] - Usuń kategorię
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     // Sprawdź czy kategoria istnieje
     const existingCategory = await prisma.category.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         _count: {
           select: {
@@ -139,7 +142,7 @@ export async function DELETE(
     }
 
     await prisma.category.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: 'Kategoria została usunięta' });

@@ -1,16 +1,14 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { 
   Search, 
-  Filter, 
   Grid, 
   List,
-  SlidersHorizontal,
   Package
 } from "lucide-react";
 import Image from "next/image";
@@ -55,10 +53,9 @@ export default function ProductsPage() {
   const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
   const [sortBy, setSortBy] = useState("newest");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [showFilters, setShowFilters] = useState(false);
 
   // Pobierz produkty i kategorie
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (selectedCategory !== 'all') {
@@ -75,7 +72,7 @@ export default function ProductsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory]);
 
   const fetchCategories = async () => {
     try {
@@ -92,7 +89,7 @@ export default function ProductsPage() {
   useEffect(() => {
     fetchProducts();
     fetchCategories();
-  }, [selectedCategory]);
+  }, [selectedCategory, fetchProducts]);
 
   // Filtruj i sortuj produkty
   const filteredAndSortedProducts = products

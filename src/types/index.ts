@@ -1,16 +1,29 @@
+export interface Category {
+  id: string
+  name: string
+  slug: string
+  description?: string
+}
+
+export interface ProductImage {
+  id: string
+  url: string
+}
+
 export interface Product {
   id: string
   name: string
-  description: string
+  description?: string
   price: number
-  category: string
-  dimensions: string
-  material: string
-  features: string[]
-  images: string[]
+  categoryId: string
+  category: Category
   isActive: boolean
-  createdAt: Date
-  updatedAt: Date
+  dimensions?: string
+  material?: string
+  features: string[]
+  images: ProductImage[]
+  createdAt: string
+  updatedAt: string
 }
 
 export interface User {

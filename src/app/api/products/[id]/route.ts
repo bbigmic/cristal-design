@@ -18,11 +18,12 @@ const updateProductSchema = z.object({
 // GET /api/products/[id] - Pobierz produkt po ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const product = await prisma.product.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         category: true,
         images: true,
@@ -49,15 +50,16 @@ export async function GET(
 // PUT /api/products/[id] - Zaktualizuj produkt
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const body = await request.json();
     const validatedData = updateProductSchema.parse(body);
 
     // Sprawdź czy produkt istnieje
     const existingProduct = await prisma.product.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         images: true,
       },
@@ -101,7 +103,7 @@ export async function PUT(
     // Usuń stare zdjęcia z bazy danych
     await prisma.image.deleteMany({
       where: {
-        productId: params.id,
+        productId: id,
         url: {
           in: imagesToDelete,
         },
@@ -114,13 +116,13 @@ export async function PUT(
       await prisma.image.createMany({
         data: newImages.map(url => ({
           url,
-          productId: params.id,
+          productId: id,
         })),
       });
     }
 
     const updatedProduct = await prisma.product.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name: validatedData.name,
         description: validatedData.description,
@@ -141,7 +143,7 @@ export async function PUT(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Validation error', details: error.errors },
+        { error: 'Validation error', details: error.issues },
         { status: 400 }
       );
     }
@@ -157,12 +159,13 @@ export async function PUT(
 // DELETE /api/products/[id] - Usuń produkt
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     // Sprawdź czy produkt istnieje
     const existingProduct = await prisma.product.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         images: true,
       },
@@ -189,7 +192,7 @@ export async function DELETE(
 
     // Usuń produkt z bazy danych (zdjęcia zostaną usunięte automatycznie przez cascade)
     await prisma.product.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: 'Produkt został usunięty' });

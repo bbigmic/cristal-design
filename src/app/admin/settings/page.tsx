@@ -14,7 +14,6 @@ import {
   Shield, 
   Globe, 
   Bell,
-  Database,
   Palette
 } from "lucide-react";
 

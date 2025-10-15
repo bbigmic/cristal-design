@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,7 +72,7 @@ export default function ProductsPage() {
   const [newFeature, setNewFeature] = useState('');
 
   // Pobierz produkty i kategorie
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (selectedCategory !== 'all') {
@@ -89,7 +89,7 @@ export default function ProductsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory]);
 
   const fetchCategories = async () => {
     try {
@@ -106,7 +106,7 @@ export default function ProductsPage() {
   useEffect(() => {
     fetchProducts();
     fetchCategories();
-  }, [selectedCategory]);
+  }, [selectedCategory, fetchProducts]);
 
   // Filtruj produkty
   const filteredProducts = products.filter(product => {

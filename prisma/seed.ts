@@ -44,6 +44,31 @@ async function main() {
 
   console.log('✅ Użytkownicy utworzeni');
 
+  // Tworzenie kategorii
+  const categories = [
+    { name: 'Marmur', slug: 'marmur', description: 'Eleganckie płyty marmurowe' },
+    { name: 'Granit', slug: 'granit', description: 'Trwałe płyty granitowe' },
+    { name: 'Ceramika', slug: 'ceramika', description: 'Nowoczesne płyty ceramiczne' },
+    { name: 'Kwarc', slug: 'kwarc', description: 'Luksusowe płyty kwarcowe' },
+  ];
+
+  for (const categoryData of categories) {
+    await prisma.category.upsert({
+      where: { slug: categoryData.slug },
+      update: {},
+      create: categoryData,
+    });
+  }
+
+  console.log('✅ Kategorie utworzone');
+
+  // Pobierz kategorie do mapowania
+  const categoryMap = new Map();
+  const allCategories = await prisma.category.findMany();
+  allCategories.forEach(cat => {
+    categoryMap.set(cat.name, cat.id);
+  });
+
   // Tworzenie produktów
   const products = [
     {
@@ -115,11 +140,22 @@ async function main() {
   ];
 
   for (const productData of products) {
-    await prisma.product.upsert({
-      where: { name: productData.name },
-      update: {},
-      create: productData,
-    });
+    const { category, images, ...productWithoutCategory } = productData;
+    const categoryId = categoryMap.get(category);
+    
+    if (categoryId) {
+      await prisma.product.create({
+        data: {
+          ...productWithoutCategory,
+          category: {
+            connect: { id: categoryId }
+          },
+          images: {
+            create: images.map(url => ({ url }))
+          },
+        },
+      });
+    }
   }
 
   console.log('✅ Produkty utworzone');

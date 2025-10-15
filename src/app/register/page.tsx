@@ -57,7 +57,7 @@ export default function RegisterPage() {
       } else {
         setError(data.error || "Wystąpił błąd podczas rejestracji");
       }
-    } catch (error) {
+    } catch {
       setError("Wystąpił błąd podczas rejestracji");
     } finally {
       setIsLoading(false);
