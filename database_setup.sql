@@ -1,5 +1,24 @@
 -- Crystal Design Platform - Database Setup
 -- Plik SQL do utworzenia wszystkich tabel i przykładowych danych
+-- 
+-- INSTRUKCJE DLA NEON TECH SQL EDITOR:
+-- 1. Skopiuj całą zawartość tego pliku
+-- 2. Wklej do Neon Tech SQL Editor
+-- 3. Uruchom wszystkie zapytania (Ctrl+A, następnie Execute)
+-- 4. Sprawdź czy wszystkie tabele zostały utworzone poprawnie
+--
+-- UWAGA: Ten plik używa enumów PostgreSQL (Role, OrderStatus)
+-- i jest w pełni kompatybilny z Prisma ORM
+
+-- =============================================
+-- TWORZENIE ENUMÓW
+-- =============================================
+
+-- Enum dla ról użytkowników
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+
+-- Enum dla statusów zamówień
+CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED');
 
 -- =============================================
 -- TWORZENIE TABEL
@@ -11,11 +30,11 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "name" TEXT,
     "password" TEXT,
-    "role" TEXT NOT NULL DEFAULT 'USER',
-    "emailVerified" TIMESTAMP,
+    "role" "Role" NOT NULL DEFAULT 'USER',
+    "emailVerified" TIMESTAMP(3),
     "image" TEXT,
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
 -- Tabela kont (dla NextAuth)
@@ -40,7 +59,7 @@ CREATE TABLE "sessions" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "sessionToken" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "expires" TIMESTAMP NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
     CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -48,7 +67,7 @@ CREATE TABLE "sessions" (
 CREATE TABLE "verification_tokens" (
     "identifier" TEXT NOT NULL,
     "token" TEXT NOT NULL,
-    "expires" TIMESTAMP NOT NULL
+    "expires" TIMESTAMP(3) NOT NULL
 );
 
 -- Tabela kategorii
@@ -57,8 +76,8 @@ CREATE TABLE "categories" (
     "name" TEXT NOT NULL,
     "description" TEXT,
     "slug" TEXT NOT NULL,
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
 -- Tabela produktów
@@ -66,14 +85,14 @@ CREATE TABLE "products" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "description" TEXT,
-    "price" DECIMAL(10,2) NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     "categoryId" TEXT NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "dimensions" TEXT,
     "material" TEXT,
     "features" JSONB, -- JSON w PostgreSQL
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     CONSTRAINT "products_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -89,12 +108,12 @@ CREATE TABLE "images" (
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userId" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'PENDING',
-    "totalAmount" DECIMAL(10,2) NOT NULL,
+    "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
+    "totalAmount" DOUBLE PRECISION NOT NULL,
     "shippingAddress" TEXT NOT NULL,
     "notes" TEXT,
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     CONSTRAINT "orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -104,13 +123,13 @@ CREATE TABLE "order_items" (
     "orderId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "price" DECIMAL(10,2) NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     CONSTRAINT "order_items_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "order_items_productId_fkey" FOREIGN KEY ("productId") REFERENCES "products" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- =============================================
--- INDEKSY
+-- INDEKSY UNIKALNE
 -- =============================================
 
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
@@ -148,6 +167,22 @@ INSERT INTO "images" ("id", "url", "productId") VALUES
 ('img_006', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525488/photo-horizontal1_c5jg3k.jpg', 'prod_003'),
 ('img_007', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760548382/products/bw5arbhi5mvdwcxs5gkp.jpg', 'prod_004'),
 ('img_008', 'https://res.cloudinary.com/dd0dqviwc/image/upload/v1760525489/photo-vertical2_xci4a6.jpg', 'prod_004');
+
+-- =============================================
+-- WERYFIKACJA INSTALACJI
+-- =============================================
+
+-- Sprawdź czy wszystkie tabele zostały utworzone:
+-- SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
+
+-- Sprawdź czy enumy zostały utworzone:
+-- SELECT typname FROM pg_type WHERE typname IN ('Role', 'OrderStatus');
+
+-- Sprawdź czy dane zostały wstawione:
+-- SELECT COUNT(*) FROM users;
+-- SELECT COUNT(*) FROM categories;
+-- SELECT COUNT(*) FROM products;
+-- SELECT COUNT(*) FROM images;
 
 -- =============================================
 -- KOMENTARZE

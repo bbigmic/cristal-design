@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Shield, Zap } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const heroImages = [
@@ -40,6 +41,13 @@ export default function HeroSection() {
     setIsTransitioning(true);
     setCurrentImageIndex(index);
     setTimeout(() => setIsTransitioning(false), 1000);
+  };
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -84,7 +92,7 @@ export default function HeroSection() {
         </div>
 
         {/* Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="hidden md:grid grid-cols-3 gap-6 mb-12">
           <div className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg p-4">
             <Shield className="h-6 w-6 text-blue-400" />
             <span className="text-sm font-medium">Wodoodporne</span>
@@ -101,11 +109,18 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
-            Zobacz Produkty
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-          <Button size="lg" variant="outline" className="border-white text-black hover:bg-white hover:text-gray-900 px-8 py-4 text-lg">
+          <Link href="/products">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+              Zobacz Produkty
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+          <Button 
+            size="lg" 
+            variant="outline" 
+            className="border-white text-black hover:bg-white hover:text-gray-900 px-8 py-4 text-lg"
+            onClick={scrollToContact}
+          >
             Skontaktuj się z nami
           </Button>
         </div>
