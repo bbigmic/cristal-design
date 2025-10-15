@@ -34,3 +34,4 @@ export function CartBadge({ className }: CartBadgeProps) {
     </Badge>
   );
 }
+

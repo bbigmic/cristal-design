@@ -3,6 +3,7 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Scissors, Wrench, Truck, Shield } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const features = [
   {
@@ -35,11 +36,34 @@ const benefits = [
 ];
 
 export default function FeaturesSection() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
+    <section className="py-20 bg-gray-50 relative overflow-hidden">
+      {/* Parallax Background */}
+      <div 
+        className="absolute inset-0 opacity-50"
+        style={{
+          transform: `translateY(${scrollY * 0.5}px)`,
+          backgroundImage: `url('https://res.cloudinary.com/dd0dqviwc/image/upload/v1760570163/image_5_nu6tsa.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          top: '-50%'
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Dlaczego wybrać nasze płyty?
           </h2>
@@ -109,6 +133,7 @@ export default function FeaturesSection() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>
