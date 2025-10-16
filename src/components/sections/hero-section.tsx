@@ -108,9 +108,9 @@ export default function HeroSection() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-sm mx-auto px-4">
           <Link href="/products">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-base flex-1 sm:w-auto sm:px-8 sm:py-4 sm:text-lg">
               Zobacz Produkty
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
@@ -118,7 +118,7 @@ export default function HeroSection() {
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-white text-black hover:bg-white hover:text-gray-900 px-8 py-4 text-lg"
+            className="border-white text-black hover:bg-white hover:text-gray-900 px-6 py-3 text-base flex-1 sm:w-auto sm:px-8 sm:py-4 sm:text-lg"
             onClick={scrollToContact}
           >
             Skontaktuj się z nami
